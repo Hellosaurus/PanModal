@@ -56,6 +56,13 @@ public protocol PanModalPresentable: AnyObject {
     var longFormHeight: PanModalHeight { get }
 
     /**
+     The amount of points to inset each side of the pan modal container view.
+
+     Default value is nil.
+     */
+    var widthInset: CGFloat? { get }
+
+    /**
      The corner radius used when `shouldRoundTopCorners` is enabled.
 
      Default Value is 8.0.

@@ -31,6 +31,10 @@ public extension PanModalPresentable where Self: UIViewController {
         return .contentHeight(scrollView.contentSize.height)
     }
 
+    var widthInset: CGFloat? {
+        return nil
+    }
+
     var cornerRadius: CGFloat {
         return 8.0
     }
