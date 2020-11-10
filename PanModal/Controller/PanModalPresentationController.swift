@@ -175,7 +175,6 @@ open class PanModalPresentationController: UIPresentationController {
     open override var frameOfPresentedViewInContainerView: CGRect {
         let superFrame = super.frameOfPresentedViewInContainerView
         guard let presentable = presentable, let widthInset = presentable.widthInset else { return superFrame }
-
         return superFrame.insetBy(dx: widthInset, dy: 0)
     }
 
