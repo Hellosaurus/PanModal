@@ -371,8 +371,10 @@ private extension PanModalPresentationController {
         let adjustedWidth = presentable.widthInset.map { frame.size.width - 2 * $0 } ?? frame.size.width
         let adjustedSize = CGSize(width: adjustedWidth, height: frame.size.height - anchoredYPosition)
         let panFrame = panContainerView.frame
-        panContainerView.frame.size = frame.size
-        
+
+        panContainerView.frame.size.height = frame.size.height
+        panContainerView.frame.size.width = adjustedWidth
+
         if ![shortFormYPosition, longFormYPosition].contains(panFrame.origin.y) {
             // if the container is already in the correct position, no need to adjust positioning
             // (rotations & size changes cause positioning to be out of sync)
