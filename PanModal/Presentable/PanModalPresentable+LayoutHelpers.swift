@@ -19,7 +19,7 @@ extension PanModalPresentable where Self: UIViewController {
      so we can access PanModalPresentationController properties and methods
      */
     var presentedVC: PanModalPresentationController? {
-        return presentationController as? PanModalPresentationController
+        return (navigationController?.presentationController as? PanModalPresentationController) ?? presentationController as? PanModalPresentationController
     }
 
     /**
