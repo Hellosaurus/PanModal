@@ -172,6 +172,13 @@ open class PanModalPresentationController: UIPresentationController {
         configureViewLayout()
     }
 
+    open override var frameOfPresentedViewInContainerView: CGRect {
+        let superFrame = super.frameOfPresentedViewInContainerView
+        guard let presentable = presentable, let widthInset = presentable.widthInset else { return superFrame }
+
+        return superFrame.insetBy(dx: widthInset, dy: 0)
+    }
+
     override public func presentationTransitionWillBegin() {
 
         guard let containerView = containerView
@@ -351,12 +358,12 @@ private extension PanModalPresentationController {
             addDragIndicatorView(to: presentedView)
         }
 
+        setNeedsLayoutUpdate()
+        adjustPanContainerBackgroundColor()
+
         if presentable.shouldRoundTopCorners {
             addRoundedCorners(to: presentedView)
         }
-
-        setNeedsLayoutUpdate()
-        adjustPanContainerBackgroundColor()
     }
 
     /**
@@ -374,7 +381,7 @@ private extension PanModalPresentationController {
 
         panContainerView.frame.size.height = frame.size.height
         panContainerView.frame.size.width = adjustedWidth
-
+        
         if ![shortFormYPosition, longFormYPosition].contains(panFrame.origin.y) {
             // if the container is already in the correct position, no need to adjust positioning
             // (rotations & size changes cause positioning to be out of sync)
@@ -794,12 +801,13 @@ private extension PanModalPresentationController {
 
         let yOffset = scrollView.contentOffset.y
         let presentedSize = containerView?.frame.size ?? .zero
+        let adjustedWidth = presentable?.widthInset.map { presentedSize.width - 2 * $0 } ?? presentedSize.width
 
         /**
          Decrease the view bounds by the y offset so the scroll view stays in place
          and we can still get updates on its content offset
          */
-        presentedView.bounds.size = CGSize(width: presentedSize.width, height: presentedSize.height + yOffset)
+        presentedView.bounds.size = CGSize(width: adjustedWidth, height: presentedSize.height + yOffset)
 
         if oldYValue > yOffset {
             /**

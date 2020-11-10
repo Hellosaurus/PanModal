@@ -96,7 +96,7 @@ class UserGroupViewController: UITableViewController, PanModalPresentable {
     var shortFormHeight: PanModalHeight {
         return isShortFormEnabled ? .contentHeight(300.0) : longFormHeight
     }
-
+    
     var scrollIndicatorInsets: UIEdgeInsets {
         let bottomOffset = presentingViewController?.bottomLayoutGuide.length ?? 0
         return UIEdgeInsets(top: headerView.frame.size.height, left: 0, bottom: bottomOffset, right: 0)
